@@ -1,0 +1,18 @@
+#plot 1
+h<-read.csv("household_power_consumption.csv")
+View(h)
+str(h)
+h$Date=as.Date(h$Date)
+str(h)
+h$Time=strptime(h$Time,format="%Y-%m-%d %H:%M:%S")
+str(h)
+h$Global_active_power=as.numeric(h$Global_active_power)
+hist(h$Global_active_power,col="red")
+#plot 2
+data <- read.table("household_power_consumption.txt",sep = ";",header = TRUE,na.strings = "?")
+data$Global_ative_power <- as.numeric(data$Global_active_power)
+data$dateTime <- as.POSIXct(paste(data$Date,data$Time),format = "%d/%m/%Y %H:%M:%S")
+data <- data[(data$dateTime>="2007-02-01") & (data$dateTime < "2007-02-03"),]
+png("plot2.png")
+plot(x=data$dateTime,y=data$Global_active_power,xlab="",ylab="Global Active Power(kilowatts)",main="")
+dev.off() 
